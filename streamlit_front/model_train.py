@@ -8,13 +8,13 @@ from matplotlib import pyplot as plt
 import numpy as np
 import os
 import pandas as pd
-
-
+import tensorflow as tf
 
 # DIR = '.\data\img2.jpg'
-DIR = '.\data\img4.jpg'
+# DIR = '.\data\img4.jpg'
 # DIR = '.\data\tough.jpg'
 # DIR = '.\data\crap_image.jpg'
+DIR = '.\data\\2.jpeg'
 
 
 def get_model():
@@ -44,7 +44,7 @@ def get_model():
                   optimizer=keras.optimizers.Adam(), metrics=['accuracy'])
 
     if os.path.isdir('./my_model'):
-        model = keras.models.load_model('./my_model')
+        model = keras.models.load_model('./my_model/')
         print("MODEL LOADED")
     else:
         model.fit(x_train, y_train, batch_size=128,
@@ -58,6 +58,7 @@ def get_cropped_pincode(img):
     print("getting cropped image")
     reader = easyocr.Reader(['en'], gpu=True)
     result = reader.readtext(img)
+    print(result)
     # print(result)
     # img = cv.imread(img)
 
@@ -98,7 +99,7 @@ def predict_ocr(cropped_images):
     for i in cropped_images:
         x = -1
         y = -1
-        ans = reader.readtext(i)
+        ans = reader.readtext(i, batch_size=1000)
 
         for j in ans[0][0]:
             x = max(x, j[0])
@@ -155,7 +156,6 @@ if __name__ == "__main__":
     model = get_model()
     img = cv.imread(DIR)
     print(os.getcwd())
-    print(type(img))
     info, crop = get_cropped_pincode(img)
     pre_evaluation = evaluate(info, crop)
     pred_test = predict_ocr(crop)

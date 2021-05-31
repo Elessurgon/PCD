@@ -1,8 +1,9 @@
 matplotlib==3.3.4
-numpy==1.19.2
-easyocr==1.3.0.1
+streamlit==0.80.0
 pandas==1.2.3
 opencv_python==4.5.1.48
 Keras==2.4.3
-streamlit==0.80.0
+tensorflow==2.3.0
+numpy==1.19.2
+easyocr==1.3.0.1
 Pillow==8.2.0
